@@ -1,0 +1,16 @@
+{
+  "name": "@sp/app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SuperOne 主应用壳 - 路由装配、布局、全局入口",
+  "dependencies": {
+    "@sp/core": "workspace:*",
+    "@sp/auth": "workspace:*",
+    "@sp/system": "workspace:*",
+    "@sp/gen": "workspace:*",
+    "@sp/dict": "workspace:*",
+    "@sp/file": "workspace:*",
+    "@sp/log": "workspace:*",
+    "@sp/automation": "workspace:*"
+  }
+}

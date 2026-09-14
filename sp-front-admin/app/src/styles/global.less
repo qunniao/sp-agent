@@ -1,0 +1,95 @@
+/**
+ * SuperOne 全局样式
+ * 覆盖 Ant Design 默认样式，统一项目视觉风格
+ */
+
+// ---- CSS 变量 ----
+:root {
+  --primary-color: #1677ff;
+  --success-color: #52c41a;
+  --warning-color: #faad14;
+  --error-color: #ff4d4f;
+  --text-color: #333;
+  --text-secondary: #666;
+  --border-color: #e8e8e8;
+  --bg-color: #f0f2f5;
+}
+
+// ---- 全局重置 ----
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  color: var(--text-color);
+  background: var(--bg-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  height: 100%;
+}
+
+// ---- 滚动条美化 ----
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+// ---- Ant Design 覆蓋 ----
+
+// 让侧边栏折叠动画更丝滑
+.ant-layout-sider {
+  transition: all 0.2s ease;
+}
+
+// 表格分页间距优化
+.ant-table-wrapper {
+  .ant-table-pagination {
+    margin-top: 16px;
+  }
+}
+
+// 卡片统一间距
+.ant-card {
+  margin-bottom: 16px;
+}
+
+// 搜索表单区域
+.search-form {
+  margin-bottom: 16px;
+  padding: 24px 24px 0;
+  background: #fff;
+  border-radius: 8px;
+}
+
+// 操作按钮区域
+.action-bar {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// 页面容器
+.page-container {
+  padding: 0;
+  min-height: calc(100vh - 64px - 48px);
+}

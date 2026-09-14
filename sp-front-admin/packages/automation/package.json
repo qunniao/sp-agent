@@ -1,0 +1,10 @@
+{
+  "name": "@sp/automation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "自动化工作流模块 - AI 编排、定时触发、步骤执行",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@sp/core": "workspace:*"
+  }
+}

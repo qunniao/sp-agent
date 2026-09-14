@@ -1,0 +1,10 @@
+{
+  "name": "@sp/dict",
+  "version": "1.0.0",
+  "private": true,
+  "description": "数据字典模块 - 字典类型管理、字典数据管理",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@sp/core": "workspace:*"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@sp/log",
+  "version": "1.0.0",
+  "private": true,
+  "description": "日志管理模块 - 操作日志、登录日志",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@sp/core": "workspace:*"
+  }
+}

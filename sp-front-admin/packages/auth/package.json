@@ -1,0 +1,10 @@
+{
+  "name": "@sp/auth",
+  "version": "1.0.0",
+  "private": true,
+  "description": "认证模块 - 登录、token管理、权限校验",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@sp/core": "workspace:*"
+  }
+}

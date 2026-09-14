@@ -1,0 +1,10 @@
+{
+  "name": "@sp/system",
+  "version": "1.0.0",
+  "private": true,
+  "description": "系统管理模块 - 用户管理、角色管理、菜单管理",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@sp/core": "workspace:*"
+  }
+}

@@ -1,0 +1,9 @@
+# pnpm workspace 配置
+# 每个包独立，修改一个模块不影响其他模块
+packages:
+  - "packages/*"
+  - "app"
+allowBuilds:
+  core-js: true
+  esbuild: true
+  vue-demi: true

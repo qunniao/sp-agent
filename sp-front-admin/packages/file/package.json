@@ -1,0 +1,10 @@
+{
+  "name": "@sp/file",
+  "version": "1.0.0",
+  "private": true,
+  "description": "文件管理模块 - 文件上传、预览、OSS对接",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@sp/core": "workspace:*"
+  }
+}

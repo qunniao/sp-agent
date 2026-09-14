@@ -1,0 +1,10 @@
+{
+  "name": "@sp/gen",
+  "version": "1.0.0",
+  "private": true,
+  "description": "代码生成器模块 - 选表生成前后端CRUD代码",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@sp/core": "workspace:*"
+  }
+}

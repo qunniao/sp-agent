@@ -1,0 +1,16 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### IDE ###
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+
+### OS ###
+.DS_Store
+
+### 本地密钥 ###
+.env
+application-local.yml

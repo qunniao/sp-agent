@@ -1,0 +1,13 @@
+{
+  "name": "@sp/core",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SuperOne 核心公共模块 - 所有业务模块的基础依赖",
+  "main": "src/index.ts",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "ant-design-vue": "^4.2.1",
+    "vue-router": "^4.3.0",
+    "dayjs": "^1.11.10"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "sp-front-admin",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SuperOne 后台管理系统 - 超级一人公司",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0",
+    "pinia": "^2.1.7",
+    "ant-design-vue": "^4.2.1",
+    "@ant-design/icons-vue": "^7.0.1",
+    "axios": "^1.6.8",
+    "dayjs": "^1.11.10",
+    "@vueuse/core": "^10.9.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.2",
+    "vue-tsc": "^2.0.6",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "vite": "^5.1.6",
+    "less": "^4.2.0",
+    "@types/node": "^20.11.19"
+  }
+}
