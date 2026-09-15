@@ -65,7 +65,7 @@ import { SearchOutlined } from "@ant-design/icons-vue";
 import type { CommandItem } from "../composables/useCommandPalette";
 
 // ---- Props ----
-defineProps({
+const props = defineProps({
   isOpen: { type: Boolean, required: true },
   items: { type: Array as PropType<CommandItem[]>, required: true },
 });

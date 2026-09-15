@@ -433,7 +433,7 @@ export interface ChatMessage {
   personaId?: string;
   personaName?: string;
   /** 引用的上下文 */
-  contextRefs?: { type: "knowledge" | "dashboard" | "asset"; id: string; label: string }[];
+  contextRefs?: { type: string; id: string; label: string }[];
 }
 
 export interface ChatSession {
@@ -445,30 +445,33 @@ export interface ChatSession {
 }
 
 // ==================== 知识库 ====================
-
-export type DocCategory = "product" | "brand" | "customer" | "finance" | "legal" | "other";
+// 字段与后端 sp-ai 的 kb_document / kb_category 对齐（后端为准）
 
 export interface KnowledgeDoc {
-  id: string;
+  id: number;
+  /** 所属分类 id，可空 */
+  categoryId: number | null;
+  /** 文档标题 */
   title: string;
-  category: DocCategory;
+  /** 正文内容 */
   content: string;
-  format: "markdown" | "text" | "url";
-  sourceUrl?: string;
-  wordCount: number;
-  /** 引用语法提示 */
-  refSyntax: string;
-  updatedAt: string;
+  /** 向量化状态：0 待向量化，1 已向量化 */
+  status: number;
+  createTime?: string;
+  updateTime?: string;
 }
 
-export const DOC_CATEGORY_LABELS: Record<DocCategory, string> = {
-  product: "📦 产品",
-  brand: "🎨 品牌",
-  customer: "👥 客户",
-  finance: "💰 财务",
-  legal: "⚖️ 法务",
-  other: "📁 其他",
-};
+export interface KnowledgeCategory {
+  id: number;
+  /** 分类名称 */
+  name: string;
+  /** 父分类 id，0 表示顶级 */
+  parentId: number;
+  /** 排序，越小越靠前 */
+  sort: number;
+  createTime?: string;
+  updateTime?: string;
+}
 
 // ==================== 模型配置 ====================
 
@@ -600,7 +603,7 @@ export interface CalendarEntry {
   /** 类型 */
   type: "ai_auto" | "manual" | "draft";
   /** 状态 */
-  status: "scheduled" | "generating" | "pending_review" | "published" | "failed";
+  status: "scheduled" | "generating" | "pending_review" | "published" | "failed" | "draft";
   /** 关联的工作流 ID */
   automationId?: string;
   /** 关联的素材 ID */

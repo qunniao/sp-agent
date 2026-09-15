@@ -55,7 +55,7 @@
       >
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'index'">
-            {{ (pagination.current - 1) * pagination.pageSize + record._index + 1 }}
+            {{ ((pagination.current || 1) - 1) * (pagination.pageSize || 10) + record._index + 1 }}
           </template>
           <template v-if="column.key === 'status'">
             <a-tag :color="record.status === 1 ? 'green' : 'red'">

@@ -23,14 +23,22 @@ export default defineConfig({
   server: {
     port: 3000,
     host: "0.0.0.0",
-    // 后端 API 代理，等后端跑起来后取消注释
-    // proxy: {
-    //   "/api": {
-    //     target: "http://localhost:8080",
-    //     changeOrigin: true,
-    //     rewrite: (path) => path.replace(/^\/api/, ""),
-    //   },
-    // },
+    // 后端 API 代理：sp-ai（8081）控制器自带 /api 前缀；sp-base（8080）靠 rewrite 剥前缀
+    proxy: {
+      // sp-ai：AI 客服后端（知识库/问答/意图/客户/订单/风险）
+      "/api/kb": { target: "http://localhost:8081", changeOrigin: true },
+      "/api/chat": { target: "http://localhost:8081", changeOrigin: true },
+      "/api/intent": { target: "http://localhost:8081", changeOrigin: true },
+      "/api/customer": { target: "http://localhost:8081", changeOrigin: true },
+      "/api/orders": { target: "http://localhost:8081", changeOrigin: true },
+      "/api/risk": { target: "http://localhost:8081", changeOrigin: true },
+      // sp-base：传统业务后端，控制器无 /api 前缀，转发前剥掉
+      "/api": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
   },
 
   build: {

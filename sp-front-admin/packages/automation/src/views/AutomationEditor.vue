@@ -476,7 +476,7 @@
       />
       <!-- 选中节点配置面板 -->
       <div v-if="selectedCanvasNode" class="canvas-config" style="margin-top:12px">
-        <a-alert :message="`已选中节点: ${selectedCanvasNode.title}`" type="info" show-icon style="margin-bottom:8px">
+        <a-alert :message="`已选中节点: ${selectedCanvasTitle}`" type="info" show-icon style="margin-bottom:8px">
           <template #action>
             <a-button size="small" type="link" @click="editCanvasNode">编辑配置</a-button>
             <a-button size="small" type="link" danger @click="removeCanvasNode">删除</a-button>
@@ -502,6 +502,7 @@ import { message } from "ant-design-vue";
 import { RobotOutlined, PlusOutlined, ThunderboltOutlined } from "@ant-design/icons-vue";
 import { getAutomationDetail, saveAutomation, testStep, getPlatformAccounts, getPersonas, getDifyWorkflows } from "../api/automation";
 import type { AutomationDef, StepNode, StepType, AiComposeResponse, PlatformAccount, AgentPersona, DifyWorkflow } from "../types";
+import { PLATFORM_LABELS } from "../types";
 import TriggerSelector from "../components/TriggerSelector.vue";
 import StepCard from "../components/StepCard.vue";
 import VarPicker from "../components/VarPicker.vue";
@@ -612,6 +613,7 @@ function removeStep(index: number): void {
 
 // ==================== 画布模式 ====================
 const selectedCanvasNode = ref<string | null>(null);
+const selectedCanvasTitle = computed(() => form.steps.find((s) => s.id === selectedCanvasNode.value)?.title ?? "");
 
 const canvasNodes = computed<FlowNode[]>(() =>
   form.steps.map((s, i) => ({
@@ -678,6 +680,7 @@ async function handleSave(): Promise<void> {
   try {
     await saveAutomation({
       ...form,
+      runCount: 0,
       id: (route.params.id as string) || undefined,
     });
     message.success("保存成功");

@@ -118,7 +118,7 @@
         <a-button type="link" size="small" @click="showContextPanel = false">关闭</a-button>
       </div>
       <a-card size="small" title="知识库" style="margin-bottom:8px">
-        <a-checkbox v-for="d in knowledgeDocs" :key="d.id" :checked="hasCtx('knowledge', d.id)" @change="toggleCtx('knowledge', d.id, d.title)" style="display:block;margin-bottom:4px">
+        <a-checkbox v-for="d in knowledgeDocs" :key="d.id" :checked="hasCtx('knowledge', String(d.id))" @change="toggleCtx('knowledge', String(d.id), d.title)" style="display:block;margin-bottom:4px">
           {{ d.title }}
         </a-checkbox>
       </a-card>
@@ -137,7 +137,8 @@ import { ref, computed, onMounted, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import { message } from "ant-design-vue";
 import { PlusOutlined, CopyOutlined, RedoOutlined } from "@ant-design/icons-vue";
-import { getChatSessions, getChatMessages, sendChatMessage, getPersonas, getKnowledgeDocs } from "../api/automation";
+import { getChatSessions, getChatMessages, sendChatMessage, getPersonas } from "../api/automation";
+import { getKnowledgeDocs } from "../api/kb";
 import type { ChatSession, ChatMessage, AgentPersona, KnowledgeDoc } from "../types";
 
 const router = useRouter();

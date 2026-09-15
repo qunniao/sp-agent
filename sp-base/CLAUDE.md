@@ -72,7 +72,7 @@ sp-base-server ──→ sp-base-modules ──→ sp-base-framework ──→ s
 
 ```json
 {
-  "code": 200,
+  "code": 0,
   "message": "操作成功",
   "data": { ... }
 }

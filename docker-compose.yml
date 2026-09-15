@@ -1,0 +1,113 @@
+services:
+  # ---- PostgreSQL 16 + pgvector（sp-ai 数据，仅本机可连）----
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: sp_ai
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d sp_ai"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  # ---- MySQL 8（sp-base 数据，仅本机可连）----
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: sp_base
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - mysqldata:/var/lib/mysql
+      - ./sp-base/docs/sql/log_tables.sql:/docker-entrypoint-initdb.d/log_tables.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  # ---- Nacos：注册中心 + 配置中心（standalone + MySQL 持久化）----
+  nacos:
+    image: nacos/nacos-server:v2.3.2
+    environment:
+      MODE: standalone
+      SPRING_DATASOURCE_PLATFORM: mysql
+      MYSQL_SERVICE_HOST: mysql
+      MYSQL_SERVICE_PORT: "3306"
+      MYSQL_SERVICE_DB_NAME: nacos
+      MYSQL_SERVICE_USER: root
+      MYSQL_SERVICE_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_SERVICE_DB_PARAM: characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false
+      NACOS_AUTH_ENABLE: "true"
+      NACOS_AUTH_TOKEN: ${NACOS_AUTH_TOKEN}
+      NACOS_AUTH_IDENTITY_KEY: serverIdentity
+      NACOS_AUTH_IDENTITY_VALUE: security
+      JVM_XMS: 256m
+      JVM_XMX: 512m
+    ports:
+      - "8848:8848"
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "bash", "-c", "echo > /dev/tcp/localhost/8848"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 40s
+
+  # ---- sp-ai：AI 客服后端（8081，仅内网，前端反代）----
+  sp-ai:
+    build: ./sp-ai
+    environment:
+      NACOS_ADDR: nacos:8848
+      NACOS_PASSWORD: ${NACOS_PASSWORD}
+      # 占位 key：真实调用 LLM/向量化时替换为有效 key
+      DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-sk-placeholder}
+    expose:
+      - "8081"
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
+
+  # ---- sp-base：传统业务后端（8080，仅内网，前端反代）----
+  sp-base:
+    build: ./sp-base/sp-base-server
+    environment:
+      NACOS_ADDR: nacos:8848
+      NACOS_PASSWORD: ${NACOS_PASSWORD}
+    expose:
+      - "8080"
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
+
+  # ---- 前端：nginx 静态托管 + API 反代（对外 80）----
+  frontend:
+    build: ./sp-front-admin
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    depends_on:
+      - sp-ai
+      - sp-base
+
+volumes:
+  pgdata:
+  mysqldata:

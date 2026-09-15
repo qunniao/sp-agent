@@ -60,7 +60,7 @@ export function useColumnSetting(storageKey: string, allColumns: ColumnSetting[]
   );
 
   /** 过滤后可直接传给 a-table 的 columns（仅包含 visible 的列） */
-  const visibleColumns = computed<{ key: string; visible: boolean }[]>(() =>
+  const visibleColumns = computed<ColumnSetting[]>(() =>
     allColumns.filter((c) => visibleKeys.value.has(c.key))
   );
 

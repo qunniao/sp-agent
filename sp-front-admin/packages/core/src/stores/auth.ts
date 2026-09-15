@@ -19,6 +19,8 @@ export interface UserInfo {
   avatar?: string;
   email?: string;
   phone?: string;
+  /** 注册时间 */
+  createTime?: string;
   roles: string[];
   permissions: string[];
 }

@@ -257,7 +257,7 @@ async function handleDelete(item: AutomationDef): Promise<void> {
 // ==================== AI 生成结果应用 ====================
 const openAiModal = ref(false);
 function onAiApplied(def: AiComposeResponse["def"]): void {
-  router.push("/automation/editor", { state: { preset: def } });
+  router.push({ path: "/automation/editor", state: { preset: def } as any });
 }
 
 onMounted(fetchData);

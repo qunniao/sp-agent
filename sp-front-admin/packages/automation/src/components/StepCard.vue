@@ -51,6 +51,8 @@ const emit = defineEmits<{
 
 const TYPE_MAP: Record<StepType, { icon: string; label: string; color: string }> = {
   "ai.chat": { icon: "🤖", label: "AI 对话", color: "#722ed1" },
+  "agent.team": { icon: "🤝", label: "智能体团队", color: "#722ed1" },
+  "dify.workflow": { icon: "🔌", label: "Dify 工作流", color: "#1677ff" },
   "ai.generate_image": { icon: "🎨", label: "AI 生图", color: "#eb2f96" },
   "platform.post": { icon: "📮", label: "发布平台", color: "#fa541c" },
   "http.request": { icon: "🌐", label: "HTTP 请求", color: "#1677ff" },

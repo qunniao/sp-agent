@@ -114,8 +114,8 @@ const dailyTrend = [
 ];
 const maxDaily = Math.max(...dailyTrend.map((d) => d.count));
 
-const deptBreakdown = computed(() => {
-  const map: Record<string, { count: number; tasks: number }> = {};
+const deptBreakdown = computed<Record<EmployeeDepartment, { count: number; tasks: number }>>(() => {
+  const map = {} as Record<EmployeeDepartment, { count: number; tasks: number }>;
   for (const e of employees.value) {
     if (!map[e.department]) map[e.department] = { count: 0, tasks: 0 };
     map[e.department].count++;

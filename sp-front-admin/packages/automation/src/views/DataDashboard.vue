@@ -56,7 +56,7 @@
         <a-table :columns="summaryCols" :data-source="summaryData" :pagination="false" size="small" row-key="platform">
           <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'platform'">
-              {{ PLATFORM_LABELS[record.platform] }} {{ record.nickname }}
+              {{ (PLATFORM_LABELS as Record<string, string>)[record.platform] }} {{ record.nickname }}
             </template>
             <template v-if="column.key !== 'platform' && column.key !== 'nickname'">
               <div class="summary-cell">

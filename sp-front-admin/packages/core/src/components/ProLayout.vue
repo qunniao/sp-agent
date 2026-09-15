@@ -123,6 +123,7 @@
  */
 import { ref, computed, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import type { RouteRecordRaw, RouteRecordNormalized } from "vue-router";
 import { useAppStore } from "../stores/app";
 import { useAuthStore } from "../stores/auth";
 import SubMenuRenderer from "./SubMenuRenderer.vue";
@@ -309,7 +310,7 @@ const breadcrumbs = computed(() => {
 const cachedViewNames = computed(() => {
   const allRoutes = router.getRoutes();
   const names: string[] = [];
-  function collect(routeList: typeof allRoutes): void {
+  function collect(routeList: readonly (RouteRecordRaw | RouteRecordNormalized)[]): void {
     routeList.forEach((r) => {
       if (r.meta?.keepAlive && r.name) {
         names.push(r.name as string);

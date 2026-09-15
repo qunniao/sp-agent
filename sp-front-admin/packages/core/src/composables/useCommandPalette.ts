@@ -48,20 +48,8 @@ export function useCommandPalette() {
       if (seen.has(route.path)) continue;
       seen.add(route.path);
 
-      // 从 matched 中提取父级标题作为 subtitle
-      let subtitle: string | undefined;
-      const matched = route.matched || [];
-      // 最后一个是自己，倒数第二个是父级
-      if (matched.length >= 2) {
-        const parentTitle = matched[matched.length - 2]?.meta?.title as string | undefined;
-        if (parentTitle && parentTitle !== title) {
-          subtitle = parentTitle;
-        }
-      }
-
       result.push({
         title,
-        subtitle,
         path: route.path,
         icon: (route.meta?.icon as string) || undefined,
       });

@@ -48,8 +48,8 @@ http.interceptors.response.use(
   (response: AxiosResponse<ApiResponse>) => {
     const res = response.data;
 
-    // 后端返回非 200 状态码，视为业务错误
-    if (res.code !== 200) {
+    // 后端返回非 0 状态码，视为业务错误
+    if (res.code !== 0) {
       message.error(res.message || "请求失败");
 
       // 401 未授权，token 过期或无效

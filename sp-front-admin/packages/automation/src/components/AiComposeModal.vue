@@ -81,7 +81,7 @@ const examples = [
   "每小时检查新订单并通知我",
 ];
 
-async function handleGenerate(): void {
+async function handleGenerate(): Promise<void> {
   if (!description.value.trim()) {
     message.warning("请描述你想自动化的事情");
     return;

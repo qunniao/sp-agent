@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ApiResponse<T> {
 
-    /** 状态码：200 = 成功，其他 = 业务错误 */
+    /** 状态码：0 = 成功，其他 = 业务错误 */
     private int code;
 
     /** 响应消息 */
@@ -28,11 +28,11 @@ public class ApiResponse<T> {
     // ---- 静态工厂 ----
 
     public static <T> ApiResponse<T> ok(T data) {
-        return new ApiResponse<>(200, "操作成功", data);
+        return new ApiResponse<>(0, "操作成功", data);
     }
 
     public static <T> ApiResponse<T> ok(String message, T data) {
-        return new ApiResponse<>(200, message, data);
+        return new ApiResponse<>(0, message, data);
     }
 
     public static <T> ApiResponse<T> fail(int code, String message) {

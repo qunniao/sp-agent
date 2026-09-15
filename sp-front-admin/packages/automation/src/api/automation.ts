@@ -431,7 +431,7 @@ export async function triggerAutomation(id: string): Promise<string> {
 /**
  * 测试单个步骤（mock）
  */
-import type { AgentPersona, VirtualEmployee, PersonaTeam, StepType, CalendarEntry, MediaAsset, DraftItem, DistributionJob, PlatformMetrics, Inspiration, WeeklyReport, PromptTemplate, UsageStats, ChatSession, ChatMessage, KnowledgeDoc, ModelConfig, ModelUsage, DifyConnection, DifyWorkflow } from "../types";
+import type { AgentPersona, VirtualEmployee, PersonaTeam, StepType, CalendarEntry, MediaAsset, DraftItem, DistributionJob, PlatformMetrics, Inspiration, WeeklyReport, PromptTemplate, UsageStats, ChatSession, ChatMessage, ModelConfig, ModelUsage, DifyConnection, DifyWorkflow } from "../types";
 
 export async function testStep(
   type: StepType,
@@ -1049,8 +1049,9 @@ export async function getInspirations(params: {
 }): Promise<PageResult<Inspiration>> {
   await delay(300);
   let list = [...MOCK_INSPIRATIONS];
-  if (params.tag && params.tag !== "all") {
-    list = list.filter((i) => i.tags.includes(params.tag));
+  const tag = params.tag;
+  if (tag && tag !== "all") {
+    list = list.filter((i) => i.tags.includes(tag));
   }
   list.sort((a, b) => b.savedAt.localeCompare(a.savedAt));
   const start = (params.page - 1) * params.pageSize;
@@ -1414,71 +1415,6 @@ export async function sendChatMessage(
     MOCK_MESSAGES[sessionId].push(reply);
   }
   return reply;
-}
-
-// ==================== 知识库 ====================
-
-const MOCK_KNOWLEDGE: KnowledgeDoc[] = [
-  {
-    id: "kb_product", title: "SuperOne 产品介绍", category: "product", format: "markdown",
-    content: "# SuperOne 产品介绍\n\nSuperOne 是一人公司的超级运营平台，提供：\n- 自动化工作流引擎\n- 多智能体 AI 协作\n- 自媒体内容管理\n- 全平台数据看板\n\n目标用户：独立开发者、自由职业者、小型工作室。",
-    wordCount: 120, refSyntax: "{{kb.产品介绍}}", updatedAt: "2026-06-20 10:00:00",
-  },
-  {
-    id: "kb_pricing", title: "定价策略", category: "finance", format: "markdown",
-    content: "# 定价策略\n\n## 服务定价\n- 基础开发：¥500/人天\n- AI 咨询：¥800/人天\n- 长期维护：¥3000/月\n\n## 报价原则\n- 首次报价留 20% 谈判空间\n- 低于 ¥80000 的项目不接整包\n- 大客户可提供分期付款",
-    wordCount: 85, refSyntax: "{{kb.定价策略}}", updatedAt: "2026-06-18 14:00:00",
-  },
-  {
-    id: "kb_faq", title: "客户常见问题 FAQ", category: "customer", format: "markdown",
-    content: "# 客户常见问题\n\n## 价格相关\nQ: 为什么比外包贵？\nA: 我们提供的是产品级交付，含架构设计+持续维护。\n\n## 工期相关\nQ: 一个需求多长时间？\nA: 标准功能 3-5 天，复杂模块 2-3 周。\n\n## 售后相关\nQ: 上线后出问题怎么办？\nA: 紧急问题 2 小时内响应，普通问题当天处理。",
-    wordCount: 150, refSyntax: "{{kb.客户FAQ}}", updatedAt: "2026-06-15 09:00:00",
-  },
-  {
-    id: "kb_brand", title: "品牌调性指南", category: "brand", format: "markdown",
-    content: "# 品牌调性指南\n\n## 风格\n- 口语化但不随意\n- 专业但不晦涩\n- 真诚不套路\n\n## 禁用词\n- ❌ 行业领先（除非有数据）\n- ❌ 一流\n- ❌ 极致体验\n\n## 推荐用语\n- ✅ 实测\n- ✅ 具体数据\n- ✅ 个人经验",
-    wordCount: 95, refSyntax: "{{kb.品牌调性}}", updatedAt: "2026-06-10 16:00:00",
-  },
-  {
-    id: "kb_contract", title: "服务合同模板", category: "legal", format: "text",
-    content: "服务合同\n\n甲方：{{客户名称}}\n乙方：SuperOne\n\n一、服务内容\n[具体服务描述]\n\n二、交付标准\n[验收标准]\n\n三、付款方式\n首付 50%，验收后付 50%\n\n四、知识产权\n乙方保留代码著作权，甲方获得永久使用权\n\n五、保密条款\n双方对合作内容保密",
-    wordCount: 180, refSyntax: "{{kb.合同模板}}", updatedAt: "2026-06-08 10:00:00",
-  },
-];
-
-export async function getKnowledgeDocs(params?: { category?: string; keyword?: string }): Promise<KnowledgeDoc[]> {
-  await delay(300);
-  let list = [...MOCK_KNOWLEDGE];
-  if (params?.category && params.category !== "all") list = list.filter((d) => d.category === params.category);
-  if (params?.keyword) {
-    const kw = params.keyword.toLowerCase();
-    list = list.filter((d) => d.title.toLowerCase().includes(kw) || d.content.toLowerCase().includes(kw));
-  }
-  return list;
-}
-
-export async function saveKnowledgeDoc(
-  data: Omit<KnowledgeDoc, "id" | "updatedAt" | "refSyntax" | "wordCount"> & { id?: string }
-): Promise<KnowledgeDoc> {
-  await delay(400);
-  const wordCount = data.content.length;
-  const refSyntax = `{{kb.${data.title.slice(0, 10)}}}`;
-  if (data.id) {
-    const idx = MOCK_KNOWLEDGE.findIndex((d) => d.id === data.id);
-    if (idx >= 0) {
-      MOCK_KNOWLEDGE[idx] = { ...data, id: data.id, refSyntax, wordCount, updatedAt: new Date().toISOString().replace("T", " ").slice(0, 19) };
-      return MOCK_KNOWLEDGE[idx];
-    }
-  }
-  const doc: KnowledgeDoc = { ...data, id: `kb_${Date.now()}`, refSyntax, wordCount, updatedAt: new Date().toISOString().replace("T", " ").slice(0, 19) };
-  MOCK_KNOWLEDGE.push(doc);
-  return doc;
-}
-
-export async function deleteKnowledgeDoc(id: string): Promise<void> {
-  await delay(200);
-  const idx = MOCK_KNOWLEDGE.findIndex((d) => d.id === id);
-  if (idx >= 0) MOCK_KNOWLEDGE.splice(idx, 1);
 }
 
 // ==================== 模型配置 ====================

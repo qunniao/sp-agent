@@ -127,7 +127,7 @@ function onMouseUp(e: MouseEvent) {
 }
 
 // 连线拖拽
-const draggingEdge = ref<{ from: string; x1: number; y1: number; x2: number; y2: number } | null>(null);
+const draggingEdge = ref<{ id?: string; from: string; x1: number; y1: number; x2: number; y2: number } | null>(null);
 
 function onPortDrag(e: MouseEvent, node: FlowNode, port: "in" | "out") {
   if (port !== "out") return;

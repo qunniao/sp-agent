@@ -3,7 +3,7 @@
  * 后端统一返回格式，所有接口调用都遵循此结构
  */
 export interface ApiResponse<T = unknown> {
-  /** 状态码，200 表示成功 */
+  /** 状态码，0 表示成功 */
   code: number;
   /** 响应消息 */
   message: string;
