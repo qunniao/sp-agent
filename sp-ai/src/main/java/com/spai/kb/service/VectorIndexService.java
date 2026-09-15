@@ -5,15 +5,18 @@ import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 向量索引服务：把知识文档切块、向量化并写入 PGVector，检索时按相似度召回。
  *
- * <p>向量 id 约定为 {@code doc-{docId}-{chunkIndex}}，便于按文档删除。</p>
+ * <p>向量 id 由 {@code doc-{docId}-{chunkIndex}} 派生为确定性 UUID（PGVector 主键为 uuid 类型），
+ * 同一文档的切块 id 可重复计算，便于整篇删除。</p>
  */
 @Service
 public class VectorIndexService {
@@ -57,7 +60,7 @@ public class VectorIndexService {
             metadata.put("title", doc.getTitle());
             metadata.put("chunk", i);
             Document d = Document.builder()
-                    .id("doc-" + doc.getId() + "-" + i)
+                    .id(UUID.nameUUIDFromBytes(("doc-" + doc.getId() + "-" + i).getBytes(StandardCharsets.UTF_8)).toString())
                     .text(pieces.get(i))
                     .metadata(metadata)
                     .build();
