@@ -29,6 +29,17 @@ SuperOne（单仓）
 | 后端（AI） | Java 21 + Spring Boot + Spring AI + PGVector | sp-ai/ |
 | 部署 | 阿里云 Linux + Docker | 单机部署 |
 
+## 截图
+![alt text](2072227d153badc269e0936637aa1864.png)
+![alt text](9ae982e8fa2626ee5ba538297ecbd4f2.png)
+![alt text](f33aa167784a3a7d69b03eb170950fb2.png)
+![alt text](f447682a9f64fcace48825994d1b9cb8.png)
+![alt text](8bf6405ea6e913a8dd17923f8356f5c0.png)
+![alt text](fd1c9f9e7a26e226292f895ab84114d2.png)
+![alt text](fccc2ebc5280b536cb77ee7fa37e6eab.png)
+![alt text](8b9bd405590bbbcae4d81b6b635cbdef.png)
+
+
 ## 快速开始
 
 ### 前端
@@ -132,3 +143,4 @@ sp-ai/
 | [sp-front-admin/CLAUDE.md](./sp-front-admin/CLAUDE.md) | 前端架构、路由机制、API 层模式 |
 | [sp-base/CLAUDE.md](./sp-base/CLAUDE.md) | 业务后端架构、依赖方向、API 约定 |
 | [sp-ai/README.md](./sp-ai/README.md) | AI 后端功能、架构、API 一览 |
+
