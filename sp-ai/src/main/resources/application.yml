@@ -16,3 +16,11 @@ spring:
   config:
     import:
       - nacos:sp-ai.yaml
+
+# 技能安全阈值，可在 Nacos 的 sp-ai.yaml 中覆盖
+sp-ai:
+  skill:
+    order-amount:
+      default-range-days: 30
+      max-range-days: 366
+      rate-limit-per-minute: 5

@@ -6,6 +6,10 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: sp_ai
+      # 与 sp-ai 保持同一时区，否则 now() 墙钟与应用算出的日期边界会差 8 小时
+      TZ: Asia/Shanghai
+    # timezone 是 initdb 写进 postgresql.conf 的 GUC，不读 TZ 环境变量，必须显式指定
+    command: ["postgres", "-c", "timezone=Asia/Shanghai"]
     ports:
       - "127.0.0.1:5432:5432"
     volumes:
@@ -74,6 +78,8 @@ services:
       NACOS_PASSWORD: ${NACOS_PASSWORD}
       # 占位 key：真实调用 LLM/向量化时替换为有效 key
       DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-sk-placeholder}
+      # 相对时间（"最近7天"）按东八区换算，否则容器默认 UTC 会差一天
+      TZ: Asia/Shanghai
     expose:
       - "8081"
     restart: unless-stopped

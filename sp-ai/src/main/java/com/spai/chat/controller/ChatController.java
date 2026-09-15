@@ -26,6 +26,6 @@ public class ChatController {
         String sessionId = request.sessionId() == null || request.sessionId().isBlank()
                 ? "default"
                 : request.sessionId();
-        return ApiResponse.ok(chatService.chat(sessionId, request.message()));
+        return ApiResponse.ok(chatService.chat(sessionId, request.message(), request.employeeId()));
     }
 }

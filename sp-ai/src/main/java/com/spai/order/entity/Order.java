@@ -10,6 +10,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 /**
  * 订单。
@@ -17,6 +18,10 @@ import java.time.LocalDateTime;
 @Data
 @TableName("orders")
 public class Order {
+
+    /** 订单状态白名单，用于技能入参校验 */
+    public static final Set<String> STATUSES =
+            Set.of("PENDING", "PAID", "SHIPPED", "COMPLETED", "REFUNDING", "REFUNDED");
 
     @TableId(type = IdType.AUTO)
     private Long id;

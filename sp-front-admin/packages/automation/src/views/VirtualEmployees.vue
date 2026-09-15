@@ -118,6 +118,7 @@ import { ref, reactive, computed, onMounted } from "vue";
 import { message } from "ant-design-vue";
 import { PlusOutlined } from "@ant-design/icons-vue";
 import { getEmployees, saveEmployee, deleteEmployee } from "../api/automation";
+import { chatWithEmployee } from "../api/chat";
 import type { VirtualEmployee, EmployeeDepartment } from "../types";
 import { DEPARTMENT_MAP } from "../types";
 
@@ -204,9 +205,14 @@ const chatSending = ref(false);
 async function quickChat(e: VirtualEmployee): Promise<void> {
   const t = chatInputs.value[e.id]?.trim(); if (!t) return;
   chatRes.value[e.id] = ""; chatSending.value = true;
-  await new Promise((r) => setTimeout(r, 1000));
-  chatRes.value[e.id] = `🤖 收到「${t.slice(0, 25)}...」。接入LLM后我会基于岗位职责回复。`;
-  chatInputs.value[e.id] = ""; chatSending.value = false;
+  try {
+    const reply = await chatWithEmployee(e.id, t);
+    chatRes.value[e.id] = reply.answer;
+  } catch {
+    chatRes.value[e.id] = "⚠️ 对话服务暂时不可用，请稍后重试。";
+  } finally {
+    chatInputs.value[e.id] = ""; chatSending.value = false;
+  }
 }
 
 function copyText(t: string) { navigator.clipboard?.writeText(t).then(() => message.success("已复制")); }

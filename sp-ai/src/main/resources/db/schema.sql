@@ -52,6 +52,9 @@ CREATE TABLE IF NOT EXISTS orders (
     deleted          SMALLINT DEFAULT 0
 );
 
+-- 订单金额统计技能按时间区间聚合，需覆盖 create_time 范围扫描
+CREATE INDEX IF NOT EXISTS idx_orders_create_time ON orders (create_time);
+
 -- 风险预警
 CREATE TABLE IF NOT EXISTS risk_alert (
     id          BIGSERIAL PRIMARY KEY,
