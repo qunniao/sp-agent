@@ -30,14 +30,14 @@ SuperOne（单仓）
 | 部署 | 阿里云 Linux + Docker | 单机部署 |
 
 ## 截图
-![alt text](2072227d153badc269e0936637aa1864.png)
-![alt text](9ae982e8fa2626ee5ba538297ecbd4f2.png)
-![alt text](f33aa167784a3a7d69b03eb170950fb2.png)
-![alt text](f447682a9f64fcace48825994d1b9cb8.png)
-![alt text](8bf6405ea6e913a8dd17923f8356f5c0.png)
-![alt text](fd1c9f9e7a26e226292f895ab84114d2.png)
-![alt text](fccc2ebc5280b536cb77ee7fa37e6eab.png)
-![alt text](8b9bd405590bbbcae4d81b6b635cbdef.png)
+![alt text](docs/images/2072227d153badc269e0936637aa1864.png)
+![alt text](docs/images/9ae982e8fa2626ee5ba538297ecbd4f2.png)
+![alt text](docs/images/f33aa167784a3a7d69b03eb170950fb2.png)
+![alt text](docs/images/f447682a9f64fcace48825994d1b9cb8.png)
+![alt text](docs/images/8bf6405ea6e913a8dd17923f8356f5c0.png)
+![alt text](docs/images/fd1c9f9e7a26e226292f895ab84114d2.png)
+![alt text](docs/images/fccc2ebc5280b536cb77ee7fa37e6eab.png)
+![alt text](docs/images/8b9bd405590bbbcae4d81b6b635cbdef.png)
 
 
 ## 快速开始
